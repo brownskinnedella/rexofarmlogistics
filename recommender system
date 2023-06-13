@@ -1,0 +1,60 @@
+class Driver:
+    def __init__(self, location, fragility, weight, priority_score, experience, vehicle_type):
+        self.location = location
+        self.fragility = fragility
+        self.weight = weight
+        self.priority_score = priority_score
+        self.experience = experience
+        self.vehicle_type = vehicle_type
+
+    def calculate_eta(self, pickup_location, delivery_location):
+        # Simulating ETA calculation
+        # Here, we assume the ETA is calculated based on the Euclidean distance between locations
+        delta_x = self.location[0] - pickup_location[0]
+        delta_y = self.location[1] - pickup_location[1]
+        eta = (delta_x ** 2 + delta_y ** 2) ** 0.5  # Euclidean distance
+        return eta
+
+    def calculate_score(self):
+        # Dummy scoring logic based on criteria
+        score = self.priority_score + self.experience
+        return score
+
+
+# Create driver instances with dummy data
+driver1 = Driver(location=(10, 5), fragility={"name": "egg", "unit": "crate", "score": 0.95},
+                 weight={"name": "item1", "unit": "kg", "weight": 2.5},
+                 priority_score=4, experience=5, vehicle_type="sedan")
+driver2 = Driver(location=(7, 8), fragility={"name": "glass", "unit": "box", "score": 0.85},
+                 weight={"name": "item2", "unit": "kg", "weight": 3.7},
+                 priority_score=3, experience=3, vehicle_type="van")
+
+# Calculate ETA for a specific pickup and delivery location
+pickup_location = (2, 3)
+delivery_location = (15, 10)
+eta_driver1 = driver1.calculate_eta(pickup_location, delivery_location)
+eta_driver2 = driver2.calculate_eta(pickup_location, delivery_location)
+
+# Calculate scores for drivers
+score_driver1 = driver1.calculate_score()
+score_driver2 = driver2.calculate_score()
+
+# Implement the driver selection algorithm based on the scores
+drivers = [driver1, driver2]
+drivers.sort(key=lambda x: x.calculate_score(), reverse=True)
+top_drivers = drivers[:2]  # Select top 2 drivers based on scores
+
+# Print the results
+print("ETA for Driver 1:", eta_driver1)
+print("ETA for Driver 2:", eta_driver2)
+print("Score for Driver 1:", score_driver1)
+print("Score for Driver 2:", score_driver2)
+print("Top Drivers:")
+for driver in top_drivers:
+    print("- Location:", driver.location)
+    print("- Fragility:", driver.fragility)
+    print("- Weight:", driver.weight)
+    print("- Priority Score:", driver.priority_score)
+    print("- Experience:", driver.experience)
+    print("- Vehicle Type:", driver.vehicle_type)
+    print()
